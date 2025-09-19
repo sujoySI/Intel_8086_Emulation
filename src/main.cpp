@@ -27,7 +27,7 @@ struct Memory
     {
         for ( Sentence i=0; i < MAX_MEM; i++ )
         {
-            if(i = MAX_MEM - 1) break;
+            if(i == MAX_MEM - 1) break;
             Data[i] = 0;
             Data[i+1] = 0;
             Data[i+2] = 0;
@@ -44,31 +44,31 @@ struct Memory
 struct CPU
 {
     //Main Registers
-    GPR A;          //Accumulator Register with AH and AL
-    GPR B;          //Base Register with BH and BL
-    GPR C;          //Count Register with CH and CL
-    GPR D;          //Data Register with DH and DL
+    GPR A{};          //Accumulator Register with AH and AL
+    GPR B{};          //Base Register with BH and BL
+    GPR C{};          //Count Register with CH and CL
+    GPR D{};          //Data Register with DH and DL
 
     //Index Registers
-    Word SI;        //Source Index
-    Word DI;        //Destination Index
-    Word BP;        //Base Pointer
-    Word SP;        //Stack Pointer
+    Word SI{};        //Source Index
+    Word DI{};        //Destination Index
+    Word BP{};        //Base Pointer
+    Word SP{};        //Stack Pointer
 
     //Program Counter
-    Word IP;        //Instuction Pointer
+    Word IP{};        //Instruction Pointer
 
-    //Segemnt Registers
-    Word CS;        //Code Segment
-    Word DS;        //Data Segment
-    Word ES;        //Extra Segment
-    Word SS;        //Stack Segment
+    //Segment Registers
+    Word CS{};        //Code Segment
+    Word DS{};        //Data Segment
+    Word ES{};        //Extra Segment
+    Word SS{};        //Stack Segment
 
     //Status Register (Flags per bit)
-    //bitset<16> FlagRegister(0);
+    bitset<16> FlagRegister();
     Byte CF:1;      //Carry Flag
     Byte PF:1;      //Parity Flag
-    Byte AF:1;      //Auxillary Carry Flag
+    Byte AF:1;      //Auxiliary Carry Flag
     Byte ZF:1;      //Zero Flag
     Byte SF:1;      //Sign Flag
     Byte TF:1;      //Trap Flag
@@ -88,7 +88,7 @@ struct CPU
 
     void EXECUTE( Sentence Ticks, Memory& memory )
     {
-        cout<<"Ticks: "<<Ticks<<endl;
+        cout<<"Ticks: "<<Ticks<<endl; //hello
     }
 };
 

@@ -1,0 +1,30 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Intel_8086_Emulation RUN" type="XMakeRunConfiguration" factoryName="Start and Debug" singleton="false" show_console_on_std_err="false" show_console_on_std_out="false">
+    <target name="runTarget" />
+    <option name="allowRunningInParallel" value="true" />
+    <option name="projectPathOnTarget" />
+    <option name="selectedOptions">
+      <list />
+    </option>
+    <activatedToolkit name="runToolkit">
+      <toolkit name="Linux" path="$USER_HOME$/.local/bin/xmake" version="v2.9.9+20250503" id="2570ca15-ceff-3263-8a33-d24add2e5524">
+        <toolkitHost type="LOCAL">
+          <option name="target" />
+        </toolkitHost>
+      </toolkit>
+    </activatedToolkit>
+    <target name="runTarget" value="Intel_8086_Emulation" />
+    <platform name="runPlatform" value="linux" />
+    <architecture name="runArchitecture" value="x86_64" />
+    <toolchain name="runToolchain" value="default" />
+    <mode name="runMode" value="release" />
+    <arguments name="runArguments" value="" />
+    <workingDirectory name="runWorkingDir" value="$PROJECT_DIR$" />
+    <buildDirectory name="buildDirectory" value="$PROJECT_DIR$/build" />
+    <androidNDKDirectory name="androidNDKDirectory" value="" />
+    <enableVerbose name="enableVerbose" value="false" />
+    <additionalConfiguration name="additionalConfiguration" value="" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,6 @@
+[
+{
+  "directory": "/home/sujoy/Documents/Clion Projects/Intel_8086_Emulation",
+  "arguments": ["/usr/bin/gcc", "-c", "-m64", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-O3", "-Ibuild/.gens/Intel_8086_Emulation/linux/x86_64/release/platform/windows/idl", "-DNDEBUG", "-o", "build/.objs/Intel_8086_Emulation/linux/x86_64/release/src/main.cpp.o", "src/main.cpp"],
+  "file": "src/main.cpp"
+}]
