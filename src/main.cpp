@@ -1,94 +1,98 @@
-#include <cstdint>
 #include <iostream>
-#include <bitset>
+#include <bitset>                                           //Might or might not use it
+#include <cstring>                                          //memset()
+#include <cstdint>
 
 using namespace std;
 
-using Byte = uint8_t;
-using Word = uint16_t;
-using Sentence = uint32_t;
+using Byte = uint8_t;                                       // For ease of use
+using Word = uint16_t;                                      // For ease of use
+using Sentence = uint32_t;                                  // For ease of use
 
+//General Purpose Registers
 union GPR
 {
-    Word X;
+    Word X;                                                 //X for AX, BX, CX and DX
     struct
     {
-        Byte H;
-        Byte L;
+        Byte H;                                             //High for AH, BH, CH, DH
+        Byte L;                                             //Low  for AL, BL, CL, DL
+    };
+};
+
+//Status Register (Flags Are bits)
+union FLAG{
+    Word Flags;
+    struct {
+        Word CF : 1;                                        //Carry Flag
+        Word    : 1;                                        //Reserved
+        Word PF : 1;                                        //Parity Flag
+        Word    : 1;                                        //Reserved
+        Word AF : 1;                                        //Auxiliary Carry Flag
+        Word    : 1;                                        //Reserved
+        Word ZF : 1;                                        //Zero Flag
+        Word SF : 1;                                        //Sign Flag
+        Word TF : 1;                                        //Trap Flag
+        Word IF : 1;                                        //Interrupt Flag
+        Word DF : 1;                                        //Direction Flag
+        Word OF : 1;                                        //Overflow Flag
+        Word    : 4;                                        //Reserved
     };
 };
 
 struct Memory
 {
-    static constexpr Sentence MAX_MEM = 1024 * 1024;
+    static constexpr Sentence MAX_MEM = 1024 * 1024;        //Max Memory of 8086
+    Sentence AMA;                                           //Absolute Memory Address (Calculated from IP and CS)
     Byte Data[MAX_MEM];
 
     void INITIALISE()
     {
-        for ( Sentence i=0; i < MAX_MEM; i++ )
-        {
-            if(i == MAX_MEM - 1) break;
-            Data[i] = 0;
-            Data[i+1] = 0;
-            Data[i+2] = 0;
-            Data[i+3] = 0;
-            Data[i+4] = 0;
-            Data[i+5] = 0;
-            Data[i+6] = 0;
-            Data[i+7] = 0;
-            i = i + 7;
-        }
+        memset(Data, 0x00, MAX_MEM * sizeof(Data[0]));  // Sets all byte element to 0x00
     }
 };
 
 struct CPU
 {
     //Main Registers
-    GPR A{};          //Accumulator Register with AH and AL
-    GPR B{};          //Base Register with BH and BL
-    GPR C{};          //Count Register with CH and CL
-    GPR D{};          //Data Register with DH and DL
+    GPR A;                                                  //Accumulator Register
+    GPR B;                                                  //Base Register
+    GPR C;                                                  //Count Register
+    GPR D;                                                  //Data Register
 
     //Index Registers
-    Word SI{};        //Source Index
-    Word DI{};        //Destination Index
-    Word BP{};        //Base Pointer
-    Word SP{};        //Stack Pointer
+    Word SI;                                                //Source Index
+    Word DI;                                                //Destination Index
+    Word BP;                                                //Base Pointer
+    Word SP;                                                //Stack Pointer
 
     //Program Counter
-    Word IP{};        //Instruction Pointer
+    Word IP;                                                //Instruction Pointer
 
     //Segment Registers
-    Word CS{};        //Code Segment
-    Word DS{};        //Data Segment
-    Word ES{};        //Extra Segment
-    Word SS{};        //Stack Segment
+    Word CS;                                                //Code Segment
+    Word DS;                                                //Data Segment
+    Word ES;                                                //Extra Segment
+    Word SS;                                                //Stack Segment
 
-    //Status Register (Flags per bit)
-    bitset<16> FlagRegister();
-    Byte CF:1;      //Carry Flag
-    Byte PF:1;      //Parity Flag
-    Byte AF:1;      //Auxiliary Carry Flag
-    Byte ZF:1;      //Zero Flag
-    Byte SF:1;      //Sign Flag
-    Byte TF:1;      //Trap Flag
-    Byte IF:1;      //Interrupt Flag
-    Byte DF:1;      //Direction Flag
-    Byte OF:1;      //Overflow Flag
+    //Status Flag Register
+    FLAG FR;
 
     void RESET( Memory& memory )
     {
-
         IP = 0x0000;
         CS = 0xffff;
         DS = ES = SS = 0x0000;
-        CF = PF = AF = ZF = SF = OF = 0b0;
+        FR.Flags = 0;
+        if (IP == 0x0000 && CS == 0xffff) {
+            memory.AMA = (CS * 0x10) + IP;
+        }
         memory.INITIALISE();
     }
 
     void EXECUTE( Sentence Ticks, Memory& memory )
     {
-        cout<<"Ticks: "<<Ticks<<endl; //hello
+        cout<<"\nTicks: "<<Ticks<<"\n";
     }
 };
 
