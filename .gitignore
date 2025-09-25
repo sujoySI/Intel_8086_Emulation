@@ -1,6 +1,8 @@
 # Xmake cache
 .xmake/
 .idea/
+.vs/
+.vscode/
 build/
 
 # MacOS Cache
